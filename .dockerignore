@@ -5,3 +5,5 @@
 conv.py
 file.py
 .env.example
+*.wav
+*.mp3

@@ -4,3 +4,6 @@ venv
 .env
 conv.py
 file.py
+*.exe
+*.wav
+*.mp3
