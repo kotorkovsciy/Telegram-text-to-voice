@@ -1,13 +1,13 @@
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-import logging
-import os
+from logging import basicConfig, INFO
+from os import getenv
 from dotenv import load_dotenv
 
 load_dotenv()
 
-bot = Bot(token=os.getenv('TOKEN'))
-logging.basicConfig(level=logging.INFO)
+bot = Bot(token=getenv('TOKEN'))
+basicConfig(level=INFO)
 
 dp = Dispatcher(bot, storage=MemoryStorage())

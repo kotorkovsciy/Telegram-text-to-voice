@@ -5,10 +5,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from keyboards import kbCancel, kbMainMenu
-import speech_recognition as sr
+from speech_recognition import Recognizer, AudioFile
 from create_bot import bot
-import subprocess
-import os
+from subprocess import call
+from os import remove
 
 
 class VOICE(StatesGroup):
@@ -39,7 +39,7 @@ async def send_voice(message: types.Message, state: FSMContext):
         audio = file.read()
     await message.answer_audio(audio, title='Ваше голосовое сообщение', performer="Вы", reply_markup=kbMainMenu)
     await msg.delete()
-    os.remove(f'{message.from_user.id}.mp3')
+    remove(f'{message.from_user.id}.mp3')
     await state.finish()
 
 
@@ -52,10 +52,10 @@ async def send_your_voice(message: types.Message, state: FSMContext):
     # with open(f'{message.from_user.id}.mp3', "rb") as file:
     #     audio = file.read()
     # await message.answer_audio(audio, title='Ваше голосовое сообщение', performer = "Вы", reply_markup=kbMainMenu)
-    subprocess.call(['ffmpeg', '-i', f'{message.from_user.id}.mp3',
-                     f'{message.from_user.id}.wav'])
-    r = sr.Recognizer()
-    file = sr.AudioFile(f'{message.from_user.id}.wav')
+    call(['ffmpeg', '-i', f'{message.from_user.id}.mp3',
+          f'{message.from_user.id}.wav'])
+    r = Recognizer()
+    file = AudioFile(f'{message.from_user.id}.wav')
     with file as source:
         r.adjust_for_ambient_noise(source)
         audio = r.record(source)
@@ -66,9 +66,9 @@ async def send_your_voice(message: types.Message, state: FSMContext):
         audio = file.read()
     await message.answer_audio(audio, title='Ваше голосовое сообщение', performer="Вы", reply_markup=kbMainMenu)
     await msg.delete()
-    os.remove(f'{message.from_user.id}2.mp3')
-    os.remove(f'{message.from_user.id}.mp3')
-    os.remove(f'{message.from_user.id}.wav')
+    remove(f'{message.from_user.id}2.mp3')
+    remove(f'{message.from_user.id}.mp3')
+    remove(f'{message.from_user.id}.wav')
     await state.finish()
 
 

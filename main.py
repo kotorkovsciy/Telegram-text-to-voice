@@ -1,4 +1,4 @@
-import logging
+from logging import info
 
 from aiogram.utils import executor
 
@@ -7,7 +7,7 @@ from handlers import voice
 
 
 async def on_startup(_):
-    logging.info("Бот вышел в онлайн")
+    info("Бот вышел в онлайн")
 
 voice.register_handlers_voice(dp)
 
